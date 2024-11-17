@@ -1,0 +1,41 @@
+
+{% extends 'layout.html' %}
+{% include 'navbar.html' %}
+{% block content %}
+
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    {% include 'paciente/nav.html' %}
+    <hr class="mt-0 mb-4">
+    <!-- Payment methods card-->
+    <div class="card card-header-actions mb-4">
+        <div class="card-header">
+            Consultas anteriores
+            <a class="btn btn-sm btn-primary" href="/admin/paciente/{{id}}/diagnostico" type="button">Agregar consulta</a>
+        </div>
+        <div class="card-body px-0">
+            {% for historial in historiales %}
+            <div class="d-flex align-items-center justify-content-between px-4">
+                <div class="d-flex align-items-center">
+                     <i class="fab fa-cc-visa fa-2x cc-color-visa"></i>
+                    <div class="ms-4">
+                        <div class="small">{{historial.diagnostico}}</div>
+                        <div class="text-xs text-muted">{{historial.fecha}}</div>
+                    </div>
+                </div>
+                <div class="ms-4 small">
+                    <div class="badge bg-light text-dark me-3">{{historial.grado_severidad}}</div>
+                    <a href="/admin/paciente/{{historial.id}}/historial">ver</a>
+                </div>
+            </div>
+            {% if not loop.last %}
+            <hr>
+            {% endif %}
+
+            {% endfor %}
+            
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

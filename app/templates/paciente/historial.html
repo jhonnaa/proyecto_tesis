@@ -1,0 +1,157 @@
+{% extends "layout.html"%}
+{% include 'navbar.html' %}
+{% block content %}
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #printableArea, #printableArea * {
+            visibility: visible;
+        }
+        #printableArea {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+</style>
+<link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+<!-- Historial Médico -->
+<div class="container">
+  <button class="btn btn-bd-primary" onclick=polo()>imprimir</button><a class="btn btn-primary" href="/admin/paciente/{{historial.id_paciente}}/historiales">volver</a>
+  <div id="printableArea">
+  <div class="row">
+  <div class="col-md-5 mt-5">
+    <h2>Imagenes procesadas por el sistema</h2>
+    <p class="description"> la primera imagen es la original y la segunda el resultado que proporciono el sistema </p>
+    <div>
+        <div class="image-section" >
+            <div class="img-preview ">
+              <img id="imagePreview" src="/static/imagenes/{{ historial.id_paciente }}/{{ historial.imagen }}_original.jpg" alt="Imagen original" height="250px" width="250px">
+            </div>
+        </div>
+        <div class="image-section">
+            <div class="img-preview">
+              <img id="imagePreviewResult" src="/static/imagenes/{{ historial.id_paciente }}/{{ historial.imagen }}_result.jpg" alt="Imagen resultado"  height="250px" width="250px"></div>
+            
+        </div>
+    </div>
+</div>
+<div class="col-md-6 mt-5">
+        <div class="py-5 text-center">
+            <h2>Datos del Historial Médico</h2>
+            </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Identificación</h4>
+        <ul>
+          <li><strong>ID Historial:</strong> {{historial.id}}</li>
+          <li><strong>ID Paciente:</strong> {{historial.id_paciente}}</li>
+          <li><strong>ID Medico:</strong> {{historial.id_medico}}</li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h4>Fecha y Diagnóstico</h4>
+        <ul>
+          <li><strong>Fecha:</strong> {{historial.fecha}}</li>
+          <li><strong>Diagnóstico:</strong> {{historial.diagnostico}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Tratamiento</h4>
+        <ul>
+          <li><strong>Medicamentos:</strong>
+            {{historial.medicamentos_recetados}}
+          </li>
+          <li><strong>Fisioterapia:</strong>
+            {{historial.fisioterapia}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Notas</h4>
+        <ul>
+          <li>{{historial.nota}}</li>
+          
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h4>Tipo de Artrosis y Grado de Severidad</h4>
+        <ul>
+          <li><strong>Tipo Artrosis:</strong> {{historial.tipo_artrosis}}</li>
+          <li><strong>Grado Severidad:</strong> {{historial.grado_severidad}}</li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h4>Síntomas y Resultados Radiológicos</h4>
+        <ul>
+          <li><strong>Síntomas:</strong> {{historial.sintomas}}</li>
+          <li><strong>Resultados Radiológicos:</strong> {{historial.resultados_radiologicos}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Medicamentos Recetados y Fisioterapia</h4>
+        <ul>
+          <li><strong>Medicamentos Recetados:</strong> {{historial.medicamentos_recetados}}</li>
+          <li><strong>Fisioterapia:</strong> {{historial.fisioterapia}}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Cirugías Previas y Seguimiento</h4>
+        <ul>
+          <li><strong>Cirugías_Previas:</strong> {{historial.cirugias_previas}}</li>
+          <li><strong>Seguimiento:</strong>   {{historial.seguimiento}}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div> 
+</div>
+<!-- Modal para maximizar la imagen -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="imageModalLabel">Vista de Imagen</h5>
+          </div>
+          <div class="modal-body d-flex justify-content-center align-items-center" style="height: 100vh;">
+              <img id="modalImage" src="" class="img-fluid" alt="Imagen de Rayos X de Rodilla" style="max-height: 100%; max-width: 100%;">
+          </div>
+      </div>
+  </div>
+</div>
+  <script>
+    function polo(){
+        window.print()
+    }
+  </script>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#imagePreview").click(function () {
+        var imageUrl = $(this).attr('src');
+        $("#modalImage").attr("src", imageUrl);
+        $("#imageModal").modal("show");
+    });
+    $("#imagePreviewResult").click(function () {
+        var imageUrl = $(this).attr('src');
+        $("#modalImage").attr("src", imageUrl);
+        $("#imageModal").modal("show");
+    });
+    });
+  </script>  
+{% endblock content %}

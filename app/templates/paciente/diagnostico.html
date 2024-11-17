@@ -1,0 +1,106 @@
+{% extends "layout.html"%}
+{% include 'navbar.html' %}
+{% block content %}
+<link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mt-5">
+            <h2>Implementado con keras y tensorflow</h2>
+            <p class="description"> El sistema evaluara la imagen de la mamografia para detectar el tipo de cancer </p>
+            <div>
+                <form id="upload-file" method="post" enctype="multipart/form-data"> <label for="imageUpload"
+                        class="upload-label"> Selecciona una imagen de mamografia </label> <input type="file"
+                        name="file" id="imageUpload" accept=".png,.jpg,.jpeg"> 
+                    <input name="idpaciente" id="idpaciente" type="text" value="{{id}}" hidden>
+                    </form>
+                <div class="image-section" style="display:none;">
+                    <div class="img-preview">
+                        <div id="imagePreview"> </div>
+                    </div>
+                    <div> <button type="button" class="upload-label" id="btn-predict">Evaluar!</button> </div>
+                </div>
+                <div class="loader" style="display:none;"></div>
+                <h3 id="result"> <span> </span> </h3>
+                <div class="image-section" style="display:none;">
+                    <div class="img-preview">
+                        <div id="imagePreviewResult"> </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-5">
+            <form method="post">
+                <h2>Datos del Historial Médico</h2>
+                    <input type="text" class="form-control" id="idPaciente" name="idPaciente" value="{{id}}" hidden >
+                    <input type="text" class="form-control" id="idMedico" name="idMedico" value="{{session['admin_id']}}" hidden>
+                    <input type="text" class="form-control" id="nameimage" name="nameimage" value="" hidden>
+                <div class="form-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" class="form-control" id="fecha" name="fecha" value="2024-05-29">
+                </div>
+                <div class="form-group">
+                    <label for="diagnostico">Diagnóstico</label>
+                    <input type="text" class="form-control" id="diagnostico" name="diagnostico" value="">
+                </div>
+                <div class="form-group">
+                    <label for="tratamiento">Tratamiento</label>
+                    <textarea class="form-control" id="tratamiento" name="tratamiento" rows="3">Paracetamol 500mg, dos veces al día</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="tipoArtrosis">Tipo cancer</label>
+                    <input type="text" class="form-control" id="tipoArtrosis" name="tipoArtrosis" value="">
+                </div>
+                <div class="form-group">
+                    <label for="gradoSeveridad">Grado Severidad</label>
+                    <input type="text" class="form-control" id="gradoSeveridad" name="gradoSeveridad" value="Moderado">
+                </div>
+                <div class="form-group">
+                    <label for="sintomas">Síntomas</label>
+                    <textarea class="form-control" id="sintomas" name="sintomas" rows="3">tumores</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="resultadosRadiologicos">Resultados de la mamografia</label>
+                    <textarea class="form-control" id="resultadosRadiologicos" name="resultadosRadiologicos" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="medicamentosRecetados">Medicamentos Recetados</label>
+                    <input type="text" class="form-control" id="medicamentosRecetados" name="medicamentosRecetados" value="Paracetamol">
+                </div>
+                <div class="form-group">
+                    <label for="fisioterapia">Quimioterapia</label>
+                    <textarea class="form-control" id="fisioterapia" name="fisioterapia" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="cirugiasPrevias">Cirugías Previas</label>
+                    <input type="text" class="form-control" id="cirugiasPrevias" name="cirugiasPrevias" value="Ninguna">
+                </div>
+                <div class="form-group">
+                    <label for="seguimiento">Seguimiento</label>
+                    <input type="text" class="form-control" id="seguimiento" name="seguimiento" value="Paciente programado para revisión en tres meses">
+                </div>
+                <div class="form-group">
+                    <label for="notas">Notas</label>
+                    <textarea class="form-control" id="notas" name="notas" rows="3">Paciente debe evitar actividades que sobrecarguen la articulación. Revisión en tres meses para evaluar progreso.</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal para maximizar la imagen -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Vista de Imagen</h5>
+            </div>
+            <div class="modal-body d-flex justify-content-center align-items-center" style="height: 100vh;">
+                <img id="modalImage" src="" class="img-fluid" alt="Imagen de Rayos X de Rodilla" style="max-height: 100%; max-width: 100%;">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="{{  url_for('static', filename='assets/js/main.js')}}" type="text/javascript"></script>  
+{% endblock content %}
