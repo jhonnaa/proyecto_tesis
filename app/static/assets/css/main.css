@@ -106,7 +106,7 @@ ul .nav-item:hover{
     font-family: "Kodchasan", sans-serif;
 }
 
-.container .row .card{
+.container .row #card{
     background-color: rgba(197, 112, 138, 0.24) !important;
     border: none !important;
     padding: 16px !important;
@@ -162,3 +162,9 @@ ul .nav-item:hover{
     }
 
 }
+
+
+h4{
+    padding-bottom: 8px;
+    border-bottom: solid 1px palevioletred !important;
+  }

@@ -14,6 +14,9 @@
             left: 0;
             top: 0;
         }
+        h4{
+          border-bottom: solid 1px palevioletred !important;
+        }
     }
 </style>
 <link href="{{ url_for('static', filename='assets/css/main.css') }}" rel="stylesheet">
@@ -67,7 +70,7 @@
           <li><strong>Medicamentos:</strong>
             {{historial.medicamentos_recetados}}
           </li>
-          <li><strong>Fisioterapia:</strong>
+          <li><strong>Quimioterapia:</strong>
             {{historial.fisioterapia}}
           </li>
         </ul>
@@ -84,14 +87,14 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <h4>Tipo de Artrosis y Grado de Severidad</h4>
+        <h4>Tipo de Cancer y Grado de Severidad</h4>
         <ul>
-          <li><strong>Tipo Artrosis:</strong> {{historial.tipo_artrosis}}</li>
+          <li><strong>Tipo Cancer:</strong> {{historial.tipo_artrosis}}</li>
           <li><strong>Grado Severidad:</strong> {{historial.grado_severidad}}</li>
         </ul>
       </div>
       <div class="col-md-6">
-        <h4>Síntomas y Resultados Radiológicos</h4>
+        <h4>Síntomas y Resultados De La Mamografia</h4>
         <ul>
           <li><strong>Síntomas:</strong> {{historial.sintomas}}</li>
           <li><strong>Resultados Radiológicos:</strong> {{historial.resultados_radiologicos}}</li>
